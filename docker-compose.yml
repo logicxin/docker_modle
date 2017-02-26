@@ -1,0 +1,32 @@
+mysql:
+    build: ./mysql
+    container_name: MYSQL_HOST
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+php:
+    build: ./php
+    container_name: PHP_HOST
+    ports:
+      - "9000:9000"
+    links:
+      - "mysql"
+    volumes:
+      - ./code_space:/var/www/html
+
+nginx:
+    build: ./nginx
+    container_name: NGINX_HOST
+    ports:
+      - "8080:80"
+      - "443:443"
+    links:
+      - "php"
+    volumes:
+      - ./nginx/sites-enabled:/etc/nginx/conf.d
+      - ./code_space:/var/www/html
+      - ./logs/nginx:/var/log/nginx
+
