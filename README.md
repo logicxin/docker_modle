@@ -1,1 +1,1 @@
-# docker_modle
+# docker_modle for php7.1+nginx+postgres
